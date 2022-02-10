@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import './article.less'
 // This is the data we will be using to create our articles. Look at it, then proceed to line 93.
 // OPTIONAL: if you're feeling adventurous, try to make this data an export from a different module, and import it here.
@@ -87,31 +88,82 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
-  }
+  },
+  
 ];
 
-/*
-  Step 1: Write a component called 'articleMaker' to create an article.
-  Your component is a function that takes an article object as its only argument,
-  and returns a DOM node looking like the one below:
 
-  <div class="article">
-    <h2>{title of the article}</h2>
-    <p class="date">{date of the article}</p>
+  // Step 1: Write a component called 'articleMaker' to create an article.
+  // Your component is a function that takes an article object as its only argument,
+  // and returns a DOM node looking like the one below:
 
-    {three separate paragraph elements}
+  // <div class="article">
+  //   <h2>{title of the article}</h2>
+  //   <p class="date">{date of the article}</p>
 
-    <span class="expandButton">+</span>
-  </div>
+  //   {three separate paragraph elements}
 
-  Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
-  This listener should toggle the class 'article-open' on div.article.
+  //   <span class="expandButton">+</span>
+  // </div>
+const articles = document.querySelector('.articles');
 
-  Step 3: Don't forget to return something from your function!
+function articleMaker(articleObj) {
+const article = document.createElement('div');
+const articleTitle = document.createElement('h2');
+const articleDate = document.createElement('p');
+const paragraphFirst = document.createElement('p');
+const paragraphSecond = document.createElement('p');
+const paragraphThird = document.createElement('p');
+const expandBtn = document.createElement('span');
 
-  Step 4: Outside your function now, loop over the data. At each iteration you'll use your component
-  to create a div.article element and append it to the DOM inside div.articles (see index.html).
+article.appendChild(articleTitle);
+article.appendChild(articleDate);
+article.appendChild(paragraphFirst);
+article.appendChild(paragraphSecond);
+article.appendChild(paragraphThird);
+article.appendChild(expandBtn);
 
-  Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
-  Refresh the page to see the new article.
-*/
+article.classList.add('article');
+articleDate.classList.add('date');
+expandBtn.classList.add('expandButton');
+
+articleTitle.textContent = articleObj.title;
+articleDate.textContent = articleObj.date;
+paragraphFirst.textContent = articleObj.firstParagraph;
+paragraphSecond.textContent = articleObj.secondParagraph;
+paragraphThird.textContent = articleObj.thirdParagraph;
+expandBtn.textContent = '+'
+
+  // Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
+  // This listener should toggle the class 'article-open' on div.article.
+
+expandBtn.addEventListener('click', event => {
+  article.classList.toggle('article-open');
+})
+
+
+
+
+  
+  // Step 3: Don't forget to return something from your function!
+
+return article;
+}
+
+// const testPanel = articleMaker({ title: "The Title", date: "The Date" });
+// articles.append(testPanel);
+
+  // Step 4: Outside your function now, loop over the data. At each iteration you'll use your component
+  // to create a div.article element and append it to the DOM inside div.articles (see index.html).
+
+data.forEach(articleObj => {
+  const articleElem = articleMaker(articleObj);
+  articles.appendChild(articleElem);
+});
+
+
+
+
+  
+  // Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
+  // Refresh the page to see the new article.
